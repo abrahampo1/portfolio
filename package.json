@@ -2,7 +2,7 @@
   "name": "portfolio",
   "private": true,
   "version": "0.0.1",
-  "homepage": "https://abrahampo1.github.io/portfolio",
+  "homepage": "https://leiro.dev",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
