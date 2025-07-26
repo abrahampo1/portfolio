@@ -1,27 +1,28 @@
+import GitHubStats from './components/GithubStats'
 import { Project } from './components/Project'
 
 function App() {
   return (
     <>
-      <div class='sm:p-16 p-8 select-none'>
+      <div className='sm:p-16 p-8 select-none'>
         <div>
-          <p class="text-4xl tinos-regular">Abraham Leiro Fernández</p>
-          <div class="flex items-center gap-2 tinos-regular-italic">
+          <p className="text-4xl tinos-regular">Abraham Leiro Fernández</p>
+          <div className="flex items-center gap-2 tinos-regular-italic">
             <p>Senior Developer</p>
-            <div class="w-[1px] bg-gray-500 h-4"></div>
+            <div className="w-[1px] bg-gray-500 h-4"></div>
             <a href="mailto:hola@leiro.dev">hola@leiro.dev</a>
-            <div class="w-[1px] bg-gray-500 h-4"></div>
+            <div className="w-[1px] bg-gray-500 h-4"></div>
             <a href="https://github.com/abrahampo1">GitHub</a>
-            <div class="w-[1px] bg-gray-500 h-4"></div>
+            <div className="w-[1px] bg-gray-500 h-4"></div>
             <a href="https://www.linkedin.com/in/abraham-leiro/">LinkedIn</a>
           </div>
         </div>
-        <div class="mt-2">
-          <p class="tinos-regular">A Software enthusiast with a commitment to continuous learning and improvement.</p>
+        <div className="mt-2">
+          <p className="tinos-regular">A Software enthusiast with a commitment to continuous learning and improvement.</p>
         </div>
-        <div class="mt-16">
-          <p class="text-3xl tinos-regular">Portfolio</p>
-          <div class="flex gap-2 flex-wrap justify-center md:justify-start mt-2">
+        <div className="mt-16">
+          <p className="text-3xl tinos-regular">Portfolio</p>
+          <div className="flex gap-2 flex-wrap justify-center md:justify-start mt-2">
             <Project projectName='Asoft' projectCharge='Full Stack Developer' projectUrlLabel='asoft.es' projectImage='https://www.asoft.es/asoft-logo.png' projectUrl='https://asoft.es' />
             <Project projectName='BloxyCorp' projectCharge='Full Stack Developer' projectUrlLabel='bloxycorp.com' projectUrl='https://bloxycorp.com' projectImage='https://www.bloxycorp.com/logo.svg' darkMode />
             <Project projectName='Tubuencamino' projectCharge='Full Stack Developer' projectUrlLabel='tubuencamino.com' projectUrl='https://tubuencamino.com' projectImage='https://tubuencamino.com/imagenes/logotipo/logo-tbc.compressed.png' />
@@ -31,6 +32,7 @@ function App() {
             <Project projectName='TBI' projectUrlLabel='tbi-software.com' projectCharge='Full Stack Developer' projectImage='https://tbi-software.com/tbi-logo.png' projectUrl='https://tbi-software.com' />
           </div>
         </div>
+        <GitHubStats />
       </div>
     </>
   )
