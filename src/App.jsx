@@ -33,9 +33,6 @@ function App() {
             <Project projectName='Roam' projectCharge='Full Stack Developer' projectUrl='https://abrahampo1.github.io/roam/' projectUrlLabel='github.io/roam' projectImage='https://github.com/abrahampo1/roam/blob/master/src/image/logo.png?raw=true' />
           </div>
         </div>
-        <div>
-
-        </div>
       </div>
     </>
   )
