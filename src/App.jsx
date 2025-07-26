@@ -1,9 +1,6 @@
-import { useState } from 'react'
 import { Project } from './components/Project'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <div class='sm:p-16 p-8 select-none'>

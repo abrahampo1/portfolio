@@ -14,6 +14,5 @@ export function Project({
         </div>
       </div>
     </div>
-
   </>;
 }
