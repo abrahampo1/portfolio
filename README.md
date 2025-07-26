@@ -1,12 +1,39 @@
-# React + Vite
+## Portfolio de Abraham Leiro Fernández
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este es el portfolio personal de Abraham Leiro Fernández, Senior Developer. Aquí se muestran proyectos destacados, información de contacto y una breve presentación profesional.
 
-Currently, two official plugins are available:
+### 🚀 Tecnologías utilizadas
+- [React](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/) (o clases utilitarias similares)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 📦 Instalación y ejecución local
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/abrahampo1/portfolio.git
+   cd portfolio
+   ```
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+3. Inicia el servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
+4. Abre [http://localhost:5173](http://localhost:5173) en tu navegador.
 
-## Expanding the ESLint configuration
+### 🌐 Despliegue
+Puedes desplegar este portfolio fácilmente en plataformas como Vercel, Netlify o GitHub Pages.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 📁 Estructura principal
+- `src/` Código fuente principal (componentes, estilos, assets)
+- `public/` Archivos públicos y estáticos
+- `index.html` Entrada principal de la app
+
+### 👤 Autor
+- **Abraham Leiro Fernández**  
+  [GitHub](https://github.com/abrahampo1) · [LinkedIn](https://www.linkedin.com/in/abraham-leiro/) · [Email](mailto:hola@leiro.dev)
+
+---
+Portafolio desarrollado con pasión por la tecnología y el aprendizaje continuo.
