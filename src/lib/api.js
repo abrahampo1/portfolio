@@ -44,3 +44,11 @@ export async function trackPageView(path) {
     // fire-and-forget
   }
 }
+
+export async function trackLinkClick(code) {
+  try {
+    await api.post('/analytics/link-click', { code });
+  } catch {
+    // fire-and-forget
+  }
+}

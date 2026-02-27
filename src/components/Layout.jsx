@@ -1,12 +1,18 @@
 import { useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { trackPageView } from '../lib/api';
+import { trackLinkClick, trackPageView } from '../lib/api';
 
 export default function Layout() {
   const location = useLocation();
 
   useEffect(() => {
     trackPageView(location.pathname + location.search);
+
+    const params = new URLSearchParams(location.search);
+    const ref = params.get('ref');
+    if (ref) {
+      trackLinkClick(ref);
+    }
   }, [location.pathname, location.search]);
 
   return (
