@@ -32,6 +32,8 @@ function App() {
             <Project projectName='Pumm' projectCharge='Designer' projectUrl='https://pumm.io' projectUrlLabel='pumm.io' projectImage='https://pumm.io/assets/pummlogo.a0d7a614.png' />
             <Project projectName='Roam' projectCharge='Full Stack Developer' projectUrl='https://abrahampo1.github.io/roam/' projectUrlLabel='github.io/roam' projectImage='https://github.com/abrahampo1/roam/blob/master/src/image/logo.png?raw=true' />
             <Project projectName='TBI' projectUrlLabel='tbi-software.com' projectCharge='Full Stack Developer' projectImage='https://tbi-software.com/tbi-logo.png' projectUrl='https://tbi-software.com' />
+            <Project projectName='Cannagest' projectCharge='Full Stack Developer' projectUrlLabel='cannagest.com' projectImage='https://www.asoft.es/asoft-logo.png' projectUrl='https://cannagest.com' />
+            <Project projectName='CryptoGest' projectCharge='Full Stack Developer' projectUrlLabel='cryptogest.app' projectImage='https://cryptogest.app/images/logo.png' projectUrl='https://cryptogest.app' />
           </div>
         </div>
         <GitHubStats />
