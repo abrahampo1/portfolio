@@ -23,3 +23,125 @@
   font-weight: 700;
   font-style: italic;
 }
+
+/* Prose styles for rendered Markdown */
+.prose-custom {
+  font-family: "Tinos", serif;
+  line-height: 1.8;
+}
+
+.prose-custom h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-custom h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-custom h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-custom p {
+  margin-bottom: 1rem;
+}
+
+.prose-custom a {
+  text-decoration: underline;
+}
+
+.prose-custom a:hover {
+  opacity: 0.7;
+}
+
+.prose-custom ul,
+.prose-custom ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose-custom ul {
+  list-style-type: disc;
+}
+
+.prose-custom ol {
+  list-style-type: decimal;
+}
+
+.prose-custom li {
+  margin-bottom: 0.25rem;
+}
+
+.prose-custom blockquote {
+  border-left: 3px solid black;
+  padding-left: 1rem;
+  font-style: italic;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.prose-custom pre {
+  background-color: black;
+  color: white;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  border: 1px solid black;
+  border-right-width: 3px;
+  border-bottom-width: 3px;
+}
+
+.prose-custom pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+.prose-custom code {
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  padding: 0.125rem 0.375rem;
+  font-size: 0.875rem;
+}
+
+.prose-custom img {
+  border: 1px solid black;
+  border-right-width: 3px;
+  border-bottom-width: 3px;
+  max-width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.prose-custom table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.prose-custom th,
+.prose-custom td {
+  border: 1px solid black;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.prose-custom th {
+  font-weight: 700;
+}
+
+.prose-custom hr {
+  border-top: 1px solid black;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
