@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { fetchPosts, fetchCategories } from '../lib/api';
 import BlogPostCard from '../components/BlogPostCard';
@@ -10,9 +10,12 @@ export default function BlogPage() {
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState(null);
   const [search, setSearch] = useState(searchParams.get('search') || '');
+  const debounceRef = useRef(null);
+  const inputRef = useRef(null);
 
   const currentPage = Number(searchParams.get('page')) || 1;
   const activeCategory = searchParams.get('category') || '';
+  const activeSearch = searchParams.get('search') || '';
 
   useEffect(() => {
     fetchCategories().then(setCategories).catch(() => {});
@@ -23,7 +26,7 @@ export default function BlogPage() {
     fetchPosts({
       page: currentPage,
       category: activeCategory || undefined,
-      search: searchParams.get('search') || undefined,
+      search: activeSearch || undefined,
     })
       .then((data) => {
         setPosts(data.data || []);
@@ -34,7 +37,12 @@ export default function BlogPage() {
       })
       .catch(() => setPosts([]))
       .finally(() => setLoading(false));
-  }, [currentPage, activeCategory, searchParams]);
+  }, [currentPage, activeCategory, activeSearch]);
+
+  // Sync input with URL param when navigating back/forward
+  useEffect(() => {
+    setSearch(activeSearch);
+  }, [activeSearch]);
 
   function updateParams(updates) {
     const params = new URLSearchParams(searchParams);
@@ -42,6 +50,35 @@ export default function BlogPage() {
       if (value) params.set(key, value);
       else params.delete(key);
     });
+    setSearchParams(params);
+  }
+
+  const debouncedSearch = useCallback((value) => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      updateParams({ search: value || '', page: '' });
+    }, 400);
+  }, [searchParams]);
+
+  function handleSearchChange(e) {
+    const value = e.target.value;
+    setSearch(value);
+    debouncedSearch(value);
+  }
+
+  function clearSearch() {
+    setSearch('');
+    updateParams({ search: '', page: '' });
+    inputRef.current?.focus();
+  }
+
+  function clearCategory() {
+    updateParams({ category: '', page: '' });
+  }
+
+  function clearAllFilters() {
+    setSearch('');
+    const params = new URLSearchParams();
     setSearchParams(params);
   }
 
@@ -54,6 +91,7 @@ export default function BlogPage() {
 
   function handleSearch(e) {
     e.preventDefault();
+    if (debounceRef.current) clearTimeout(debounceRef.current);
     updateParams({ search: search || '', page: '' });
   }
 
@@ -61,13 +99,42 @@ export default function BlogPage() {
     updateParams({ page: page > 1 ? String(page) : '' });
   }
 
+  const hasFilters = activeSearch || activeCategory;
+  const activeCategoryName = categories.find((c) => c.slug === activeCategory)?.name;
+
   return (
     <div className="mt-16">
       <p className="text-3xl tinos-regular">Blog</p>
 
-      {/* Filters */}
-      <div className="mt-4 flex flex-col sm:flex-row gap-4 sm:items-center">
-        <div className="flex gap-2 flex-wrap">
+      {/* Search */}
+      <form onSubmit={handleSearch} className="mt-4 relative max-w-md">
+        <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input
+          ref={inputRef}
+          type="text"
+          value={search}
+          onChange={handleSearchChange}
+          placeholder="Search posts..."
+          className="w-full border border-black pl-9 pr-8 py-2 text-sm tinos-regular outline-none focus:border-r-3 focus:border-b-3 transition-all"
+        />
+        {search && (
+          <button
+            type="button"
+            onClick={clearSearch}
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition-colors cursor-pointer"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        )}
+      </form>
+
+      {/* Categories */}
+      {categories.length > 0 && (
+        <div className="mt-3 flex gap-2 flex-wrap">
           {categories.map((cat) => (
             <button
               key={cat.id}
@@ -80,29 +147,63 @@ export default function BlogPage() {
             </button>
           ))}
         </div>
-        <form onSubmit={handleSearch} className="flex gap-2">
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search posts..."
-            className="border border-black px-3 py-1 text-sm tinos-regular outline-none focus:border-r-3 focus:border-b-3 transition-all"
-          />
+      )}
+
+      {/* Active filters */}
+      {hasFilters && (
+        <div className="mt-3 flex gap-2 flex-wrap items-center">
+          <span className="text-xs tinos-regular text-gray-500">Filters:</span>
+          {activeSearch && (
+            <button
+              onClick={clearSearch}
+              className="text-xs tinos-regular px-2 py-0.5 bg-gray-100 border border-gray-300 flex items-center gap-1 hover:bg-gray-200 transition-colors cursor-pointer"
+            >
+              &ldquo;{activeSearch}&rdquo;
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          )}
+          {activeCategory && activeCategoryName && (
+            <button
+              onClick={clearCategory}
+              className="text-xs tinos-regular px-2 py-0.5 bg-gray-100 border border-gray-300 flex items-center gap-1 hover:bg-gray-200 transition-colors cursor-pointer"
+            >
+              {activeCategoryName}
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          )}
           <button
-            type="submit"
-            className="text-sm tinos-regular px-3 py-1 border border-black bg-white hover:bg-gray-100 transition-colors cursor-pointer"
+            onClick={clearAllFilters}
+            className="text-xs tinos-regular text-gray-500 hover:text-black underline cursor-pointer"
           >
-            Search
+            Clear all
           </button>
-        </form>
-      </div>
+        </div>
+      )}
 
       {/* Posts */}
       <div className="mt-6 flex flex-col gap-4">
         {loading ? (
           <p className="tinos-regular-italic">Loading posts...</p>
         ) : posts.length === 0 ? (
-          <p className="tinos-regular-italic">No posts found.</p>
+          <div className="py-8 text-center">
+            <p className="tinos-regular-italic text-gray-500">
+              {hasFilters
+                ? `No posts found${activeSearch ? ` for "${activeSearch}"` : ''}${activeCategory && activeCategoryName ? ` in ${activeCategoryName}` : ''}.`
+                : 'No posts found.'}
+            </p>
+            {hasFilters && (
+              <button
+                onClick={clearAllFilters}
+                className="mt-2 text-sm tinos-regular underline text-gray-500 hover:text-black cursor-pointer"
+              >
+                Clear filters
+              </button>
+            )}
+          </div>
         ) : (
           posts.map((post) => <BlogPostCard key={post.id} post={post} />)
         )}
