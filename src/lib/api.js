@@ -29,9 +29,9 @@ export async function fetchCategories() {
   return data;
 }
 
-export async function trackView(postId) {
+export async function trackView(slug) {
   try {
-    await api.post(`/posts/${postId}/track-view`);
+    await api.post('/analytics/track', { slug });
   } catch {
     // fire-and-forget
   }

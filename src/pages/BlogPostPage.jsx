@@ -17,7 +17,7 @@ export default function BlogPostPage() {
       .then((data) => {
         const postData = data.data || data;
         setPost(postData);
-        if (postData.id) trackView(postData.id);
+        if (postData.slug) trackView(postData.slug);
       })
       .catch(() => setError('Post not found.'))
       .finally(() => setLoading(false));
