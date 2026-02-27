@@ -36,3 +36,11 @@ export async function trackView(slug) {
     // fire-and-forget
   }
 }
+
+export async function trackPageView(path) {
+  try {
+    await api.post('/analytics/page-view', { path });
+  } catch {
+    // fire-and-forget
+  }
+}
