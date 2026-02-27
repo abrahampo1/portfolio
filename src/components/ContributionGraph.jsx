@@ -45,12 +45,12 @@ const ContributionGraph = () => {
     if (!data) return null;
 
     const { weeks } = data;
+    const weekCount = weeks.length;
 
     const maxCount = Math.max(
         ...weeks.flatMap(w => w.contributionDays.map(d => d.contributionCount))
     );
 
-    // Build month labels positioned at the first week where a new month starts
     const monthPositions = [];
     let lastMonth = null;
     weeks.forEach((week, weekIndex) => {
@@ -63,20 +63,32 @@ const ContributionGraph = () => {
         }
     });
 
+    const gridColumns = `24px repeat(${weekCount}, 1fr)`;
+
     return (
         <div className="mt-4">
             <div className="border-black border-1 border-r-3 border-b-3 p-3 bg-white overflow-x-auto">
-                <div className="inline-flex flex-col gap-1 min-w-fit">
+                <div style={{ minWidth: '680px' }}>
                     {/* Month labels */}
-                    <div className="flex" style={{ marginLeft: '28px' }}>
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: gridColumns,
+                            columnGap: '3px',
+                            marginBottom: '2px',
+                        }}
+                    >
                         {monthPositions.map(({ weekIndex, month }, i) => {
-                            const nextPos = monthPositions[i + 1]?.weekIndex ?? weeks.length;
+                            const nextPos = monthPositions[i + 1]?.weekIndex ?? weekCount;
                             const span = nextPos - weekIndex;
                             return (
                                 <div
                                     key={`${month}-${weekIndex}`}
                                     className="text-xs tinos-regular"
-                                    style={{ width: `${span * 14}px` }}
+                                    style={{
+                                        gridColumn: `${weekIndex + 2} / span ${span}`,
+                                        gridRow: 1,
+                                    }}
                                 >
                                     {MONTH_LABELS[month]}
                                 </div>
@@ -84,50 +96,41 @@ const ContributionGraph = () => {
                         })}
                     </div>
 
-                    {/* Grid */}
-                    <div className="flex gap-0">
-                        {/* Day labels column */}
-                        <div className="flex flex-col gap-[2px] mr-1" style={{ width: '24px' }}>
-                            {Array.from({ length: 7 }, (_, dayIndex) => {
-                                const dayLabel = DAY_LABELS.find(d => d.index === dayIndex);
-                                return (
-                                    <div
-                                        key={dayIndex}
-                                        className="text-xs tinos-regular flex items-center justify-end"
-                                        style={{ height: '12px' }}
-                                    >
-                                        {dayLabel ? dayLabel.label : ''}
-                                    </div>
-                                );
-                            })}
-                        </div>
-
-                        {/* Weeks columns */}
-                        {weeks.map((week, weekIndex) => (
-                            <div key={weekIndex} className="flex flex-col gap-[2px]">
-                                {Array.from({ length: 7 }, (_, dayIndex) => {
+                    {/* Contribution grid */}
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: gridColumns,
+                            gap: '3px',
+                        }}
+                    >
+                        {Array.from({ length: 7 }, (_, dayIndex) => (
+                            <React.Fragment key={dayIndex}>
+                                <div className="text-xs tinos-regular flex items-center justify-end pr-1">
+                                    {DAY_LABELS.find(d => d.index === dayIndex)?.label || ''}
+                                </div>
+                                {weeks.map((week, weekIndex) => {
                                     const day = week.contributionDays.find(
                                         d => new Date(d.date).getDay() === dayIndex
                                     );
                                     if (!day) {
-                                        return <div key={dayIndex} style={{ width: '12px', height: '12px' }} />;
+                                        return <div key={weekIndex} className="aspect-square" />;
                                     }
                                     const level = getLevel(day.contributionCount, maxCount);
                                     return (
                                         <div
-                                            key={dayIndex}
-                                            className={`${LEVELS[level]} border border-gray-300`}
-                                            style={{ width: '12px', height: '12px' }}
+                                            key={weekIndex}
+                                            className={`${LEVELS[level]} border border-gray-300 aspect-square`}
                                             title={`${day.date}: ${day.contributionCount} contribution${day.contributionCount !== 1 ? 's' : ''}`}
                                         />
                                     );
                                 })}
-                            </div>
+                            </React.Fragment>
                         ))}
                     </div>
 
                     {/* Legend */}
-                    <div className="flex items-center gap-1 mt-1 justify-end">
+                    <div className="flex items-center gap-2 mt-2 justify-end">
                         <span className="text-xs tinos-regular">Less</span>
                         {LEVELS.map((bg, i) => (
                             <div
