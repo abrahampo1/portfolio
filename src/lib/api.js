@@ -45,9 +45,9 @@ export async function trackPageView(path) {
   }
 }
 
-export async function trackLinkClick(code) {
+export async function trackLinkClick(code, utmParams = {}) {
   try {
-    await api.post('/analytics/link-click', { code });
+    await api.post('/analytics/link-click', { code, ...utmParams });
   } catch {
     // fire-and-forget
   }

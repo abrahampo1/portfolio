@@ -11,7 +11,12 @@ export default function Layout() {
     const params = new URLSearchParams(location.search);
     const ref = params.get('ref');
     if (ref) {
-      trackLinkClick(ref);
+      const utmParams = {};
+      for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content']) {
+        const val = params.get(key);
+        if (val) utmParams[key] = val;
+      }
+      trackLinkClick(ref, utmParams);
     }
   }, [location.pathname, location.search]);
 
