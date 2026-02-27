@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ContributionGraph from './ContributionGraph';
 
 const GitHubStats = () => {
     const [commits, setCommits] = useState(null);
@@ -28,6 +29,7 @@ const GitHubStats = () => {
     return (
         <div className="mt-2 tinos-regular-italic">
             <p>Total commits {commits.toLocaleString()}</p>
+            <ContributionGraph />
         </div>
     );
 };
