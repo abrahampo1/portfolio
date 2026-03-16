@@ -10,7 +10,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get('https://utils.leiro.dev/api/projects');
+        const response = await axios.get('https://utils.leiro.dev/projects');
         setProjects(response.data);
       } catch (error) {
         console.error('Error fetching projects:', error);
