@@ -50,7 +50,7 @@ export default function BlogPostPage() {
   const imageUrl = post.featured_image ? storageUrl(post.featured_image) : null;
 
   return (
-    <div className="mt-16 max-w-3xl">
+    <div className="mt-16 max-w-3xl select-text">
       <Link to="/blog" className="tinos-regular-italic hover:underline">&larr; Back to blog</Link>
 
       <h1 className="text-3xl tinos-bold mt-4">{post.title}</h1>

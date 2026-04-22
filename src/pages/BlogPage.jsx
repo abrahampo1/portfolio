@@ -103,7 +103,7 @@ export default function BlogPage() {
   const activeCategoryName = categories.find((c) => c.slug === activeCategory)?.name;
 
   return (
-    <div className="mt-16">
+    <div className="mt-16 select-text">
       <p className="text-3xl tinos-regular">Blog</p>
 
       {/* Search */}
