@@ -22,7 +22,7 @@ export default function Layout() {
 
   return (
     <>
-      <div className="sm:p-16 p-8 select-none">
+      <div className="sm:p-16 p-8">
         <div>
           <Link to="/" className="text-4xl tinos-regular hover:underline">
             Abraham Leiro Fernández
