@@ -23,6 +23,29 @@ export default function BlogPostPage() {
       .finally(() => setLoading(false));
   }, [slug]);
 
+  useEffect(() => {
+    if (!post?.title) return;
+    const previousTitle = document.title;
+    document.title = `${post.title} — Abraham Leiro Fernández`;
+
+    const canonicalHref = `https://leiro.dev/blog/${post.slug}/`;
+    let canonical = document.querySelector('link[rel="canonical"]');
+    const createdCanonical = !canonical;
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+    const previousCanonical = canonical.getAttribute('href');
+    canonical.setAttribute('href', canonicalHref);
+
+    return () => {
+      document.title = previousTitle;
+      if (createdCanonical) canonical.remove();
+      else if (previousCanonical) canonical.setAttribute('href', previousCanonical);
+    };
+  }, [post?.title, post?.slug]);
+
   if (loading) {
     return (
       <div className="mt-16">
