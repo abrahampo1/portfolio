@@ -8,12 +8,24 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const localProjects = [{
+      id: 'kepler',
+      name: 'Encuentros espaciales',
+      charge: 'Simulador interactivo',
+      url_label: 'Tierra → Marte',
+      image: '/img/kepler-cover.svg',
+      url: '/kepler',
+      dark_mode: true,
+      internal: true,
+    }];
+
     const fetchProjects = async () => {
       try {
         const response = await axios.get('https://utils.leiro.dev/projects');
-        setProjects(response.data);
+        setProjects([...localProjects, ...response.data]);
       } catch (error) {
         console.error('Error fetching projects:', error);
+        setProjects(localProjects);
       }
       setLoading(false);
     };
@@ -41,6 +53,7 @@ export default function HomePage() {
                 projectImage={project.image}
                 projectUrl={project.url}
                 darkMode={project.dark_mode}
+                internal={project.internal}
               />
             ))
           )}
